@@ -1,0 +1,147 @@
+@import "normalize.scss";
+@import "foundation.scss";
+
+body {
+	background: url("../images/custom_bg.png");
+}
+
+.name {
+	float: left;
+}
+
+.tagline {
+	float:left;
+	color: $topbar-link-color;
+	line-height: $topbar-height;
+	font-size: $topbar-menu-link-font-size;
+
+}
+
+.panel {
+	background: none repeat scroll 0 0 rgba(200, 200, 200, 0.502);
+}
+
+nav {
+	margin-bottom: 1.25em;
+}
+
+#player_container {
+	height: 240px;
+	position: fixed;
+	border-color: #FF3333;
+	border-style: solid;
+	border-width: 1px;
+	border-left: 0;
+	border-bottom: 0;
+	display: block;
+	bottom: 0px;
+	left: 0px;
+}
+
+#player_container.hidden {
+	position: fixed;
+	bottom: -240px;
+	left: 0px;
+}
+
+#player {
+	width: 480px;
+	height: 320px;
+	//display: none;
+}
+
+#player.hidden {
+	//display: none;
+}
+
+#videoToggle_btn {
+	//@include button;
+	//@include-html-classes;
+	display: block;
+	position: absolute;
+	top: -20px;
+	height: 20px;
+	padding: 2px 4px;
+	font-size: smaller;
+	border-radius: 0 3px 0 0;
+	border-left: 0;
+	//@button
+}
+
+.album-cover {
+	$behavior: nest-collapse;
+}
+
+.album-cover .cover-container {
+	cursor: pointer;
+	position: relative;
+	height: inherit;
+	overflow: hidden;;
+}
+
+.album-cover .cover-container > img {
+	//border: 1px solid #FF6666;
+	width: 100%;;
+}
+
+.album-cover .cover-container:hover .play-btn {
+	background: none repeat scroll 0 0 #FFFFFF;
+	display: block;
+	height: 50px;
+	left: 74px;
+	position: absolute;
+	top: 74px;
+	width: 50px;
+}
+
+.album-cover .tracklist {
+	list-style: none;
+	display: block;
+	font-size: 0.8em;
+	position: absolute;
+	top: 0;
+	background: rgba(0, 0, 0, 0.456);
+	color: #FFF;
+	padding: 0;
+	width: 100%;
+	li {
+		cursor: pointer;
+		text-overflow: clip;
+		white-space: nowrap;
+		left: 0px;
+		position: relative;
+		padding: 0 5px;
+
+	}
+	li:hover {
+		.playnow {
+			display: inline;
+		}
+		background: white;
+		color: black;
+	}
+	li.active {
+		background: #FF3333;
+		color: white;
+	}
+}
+
+
+.album-cover .panel {
+	height: 4.5em;
+	padding: 1.0em;
+}
+
+.album-cover .panel h5 {
+	font-size: 14px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.album-cover .panel h6 {
+	font-size: 14px;
+}
+
+.panel.playlist ul {
+	margin:-1.25em;
+}

@@ -1,0 +1,177 @@
+<!doctype html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+	<title>Albumtube</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width">
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<link rel="stylesheet" href="styles/main.css">
+</head>
+<body ng-app="AlbumTube">
+<!--[if lt IE 7]>
+<p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser
+	today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better
+	experience this site.</p>
+<![endif]-->
+
+<!--[if lt IE 9]>
+<script src="components/es5-shim/es5-shim.js"></script>
+<script src="components/json3/lib/json3.min.js"></script>
+<![endif]-->
+
+<div ng-controller="SearchArtistCtrl">
+	<div class="row">
+		<div class="large-12 columns">
+
+			<nav class="top-bar">
+				<ul class="title-area">
+					<li class="name">
+						<h1>
+							<a href="#">
+								Albumtube
+							</a>
+						</h1>
+					</li>
+					<li class="tagline">
+						<i class="left">Listen to your favorite albums</i>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+
+	<div class="row menu">
+		<div class="large-4 columns">
+			<div class="panel">
+				<h4>Search for an artist</h4>
+
+				<form ng-submit="findAlbumsForArtist()">
+					<input type="text" placeholder="Give me your favorite artist" value="Murs" ng-model="artist">
+					<a href="#" class="medium button radius" ng-click="findAlbumsForArtist()">Search</a>
+				</form>
+
+
+				<div ng-hide="state == -1">
+					<div class="small button radius" ng-click="togglePause()">
+						<div ng-show="state == 1">Pause</div>
+						<div ng-show="state == 2">Play</div>
+					</div>
+					<div class="small button radius" ng-click="playNext()">
+						Play next
+					</div>
+				</div>
+			</div>
+			<!--<div class="panel playlist" ng-controller="PlaylistCtrl">
+				<ul>
+					<li></li>
+					<li></li>
+					<li></li>
+				</ul>
+			</div>-->
+			Playerstate: {{state}}
+
+		</div>
+
+		<div id="album-covers-head" class="large-8 column" ng-show="albums">
+			<div class="panel">
+				Results for {{artist}}
+			</div>
+		</div>
+		<div id="album-covers" class="large-8 columns">
+			<div class="row">
+				<div class="large-4 small-6 columns album-cover" ng-repeat="album in albums"
+				     ng-class="{'end': $last}">
+					<div class="cover-container">
+						<img ng-src="{{album.image[3]['#text']}}">
+
+						<div class="play-btn" ng-click="getAlbumTracks($index);" ng-hide="album.tracks"></div>
+						<ul class="tracklist">
+							<!--{{$parent.$index}}-->
+							<div ng-repeat="track in album.tracks">
+								<li ng-class="{'active': track.playing}">
+									<div class="playnow hide" ng-click="playSong($index);">▸</div>
+									{{track.name}}
+								</li>
+							</div>
+						</ul>
+					</div>
+					<div class="panel">
+						<h5>{{album.artist.name}}</h5>
+						<h5 class="subheader">{{album.name}}</h5>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<footer class="row">
+		<div class="large-12 columns">
+			<hr/>
+			<div class="row">
+				<div class="large-6 columns">
+					<p>Made by Bob Bijvoet.</p>
+				</div>
+
+				<div class="large-6 columns">
+					<ul class="inline-list right">
+					</ul>
+				</div>
+
+			</div>
+		</div>
+	</footer>
+
+	<div id="player_container" ng-class="{'hidden': videoScreenIsHidden}">
+		<div id="player"></div>
+		<div id="videoToggle_btn" class="button small radius" ng-click="toggleVideoScreen()">
+			<div ng-show="videoScreenIsHidden">Show Video</div>
+			<div ng-hide="videoScreenIsHidden">Hide Video</div>
+		</div>
+	</div>
+</div>
+
+
+<script src="components/angular/angular.js"></script>
+<script src="components/angular-resource/angular-resource.js"></script>
+<!--<script src="components/angular-cookies/angular-cookies.js"></script>-->
+<!--<script src="components/angular-sanitize/angular-sanitize.js"></script>-->
+
+<!-- build:js scripts/scripts.js -->
+<script type="text/javascript" src="scripts/app.js"></script>
+<script type="text/javascript" src="scripts/modules/touch.js"></script>
+<script type="text/javascript" src="scripts/modules/services.js"></script>
+<script type="text/javascript" src="scripts/controllers/searchartist.js"></script>
+<!--<script type="text/javascript" src="scripts/controllers/playlist.js"></script>-->
+<!-- endbuild -->
+
+<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+<script>
+	/*
+	 var _gaq = [
+	 ['_setAccount', 'UA-XXXXX-X'],
+	 ['_trackPageview']
+	 ];
+	 (function (d, t) {
+	 var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
+	 g.src = ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js';
+	 s.parentNode.insertBefore(g, s)
+	 }(document, 'script'));
+	 */
+
+	var tag = document.createElement('script');
+	tag.src = "//www.youtube.com/iframe_api";
+	var firstScriptTag = document.getElementsByTagName('script')[0];
+	firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+</script>
+</body>
+</html>
