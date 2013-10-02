@@ -97,8 +97,8 @@
 						<ul class="tracklist">
 							<!--{{$parent.$index}}-->
 							<div ng-repeat="track in album.tracks">
-								<li ng-class="{'active': track.playing}">
-									<div class="playnow hide" ng-click="playSong($index);">▸</div>
+								<li ng-class="{'active': track.playing}" ng-click="playSong($index);">
+									<div class="playnow hide">▸</div>
 									{{track.name}}
 								</li>
 							</div>

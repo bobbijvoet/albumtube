@@ -6,6 +6,8 @@ var SearchArtistCtrl = app.controller('SearchArtistCtrl',
 		$scope.videoScreenIsHidden = true;
 		$scope.state = YoutubeService.playerState();
 		$scope.artist = 'nicolay';
+		$scope.currentTrack = {};
+
 
 		$scope.findAlbumsForArtist = function () {
 			LastFmService.getTopAlbumsForArtist($scope.artist, function (data) {
@@ -23,13 +25,14 @@ var SearchArtistCtrl = app.controller('SearchArtistCtrl',
 		}
 
 		$scope.playSong = function (index) {
-			//TODO: Set album index right
+			//Set old currentTrack playing state to false
+			$scope.currentTrack.playing = false;
 
-			console.log('play');
+			//Set new currentTrack
 			trackIndex = index;
-			var track = $scope.albums[albumIndex].tracks[trackIndex];
-			YoutubeService.getSong(track.artist.name + ' ' + track.name, function (youtubeId) {
-				track.playing = true;
+			$scope.currentTrack = $scope.albums[albumIndex].tracks[index];
+			YoutubeService.getSong($scope.currentTrack.artist.name + ' ' + $scope.currentTrack.name, function (youtubeId) {
+				$scope.currentTrack.playing = true;
 				console.log(youtubeId);
 				YoutubeService.player.loadVideoById(youtubeId, 0, 'large');
 			});
@@ -37,14 +40,16 @@ var SearchArtistCtrl = app.controller('SearchArtistCtrl',
 
 		$scope.playNext = function () {
 			var track = $scope.albums[albumIndex].tracks[trackIndex];
+			console.log(trackIndex);
 			track.playing = false;
 			//TODO:  Play next in queue
-			$rootScope.$emit('nextTrack');
+//			$rootScope.$emit('nextTrack');
 			$scope.playSong(trackIndex + 1);
 		}
 
 		$rootScope.$on('playerStateChange', function () {
 			$scope.$apply(function () {
+
 				$scope.state = YoutubeService.playerState();
 				if ($scope.state == 0) {
 					$scope.playNext();
