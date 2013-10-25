@@ -247,8 +247,8 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test', [
     'clean:server',
-    'coffee',
-    'compass',
+//    'coffee',
+//    'compass',
     'connect:test',
     'testacular'
   ]);
