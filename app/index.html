@@ -91,7 +91,10 @@
                      ng-class="{'end': $last}">
                     <div class="cover-container">
                         <img ng-src="{{album.image[3]['#text']}}">
-                        <div class="play-btn button tiny radius" ng-click="playAlbumTracks($index);" ng-hide="album.tracks">Play album</div>
+
+                        <div class="play-btn button tiny radius" ng-click="playAlbumTracks($index);"
+                             ng-hide="album.tracks">Play album
+                        </div>
                         <!--<div class="open-btn button tiny radius" ng-click="loadAlbumTracks($index);" ng-hide="album.tracks">Open album</div>-->
                         <ul class="tracklist">
                             <div ng-repeat="track in album.tracks">
@@ -111,10 +114,8 @@
         </div>
     </div>
     <div class="row full-width">
-
         <div id="playlist" class="large-12">
             <div id="PL-songs">
-
                 <a class="PL-song" ng-repeat="track in playlist" ng-click="playTrack(track);">
                     <!--<li ng-class="{'active': track.playing}" ng-click="addToPlaylist([track]);">
                         <div class="playnow hide">▸</div>
@@ -131,29 +132,29 @@
     </div>
 
     <div id="player_container" ng-class="{'hidden': videoScreenIsHidden}">
-            <div id="player"></div>
-            <div id="videoToggle_btn" class="button small radius" ng-click="toggleVideoScreen()">
-                <div ng-show="videoScreenIsHidden">Show Video</div>
-                <div ng-hide="videoScreenIsHidden">Hide Video</div>
-            </div>
+        <div id="player"></div>
+        <div id="videoToggle_btn" class="button small radius" ng-click="toggleVideoScreen()">
+            <div ng-show="videoScreenIsHidden">Show Video</div>
+            <div ng-hide="videoScreenIsHidden">Hide Video</div>
         </div>
+    </div>
 
-   <!-- <footer class="row">
-        <div class="large-12 columns">
-            <hr/>
-            <div class="row">
-                <div class="large-12 columns">
-                    <p>Made by Bob Bijvoet.</p>
-                </div>
+    <!-- <footer class="row">
+         <div class="large-12 columns">
+             <hr/>
+             <div class="row">
+                 <div class="large-12 columns">
+                     <p>Made by Bob Bijvoet.</p>
+                 </div>
 
-                <div class="large-6 columns">
-                    <ul class="inline-list right">
-                    </ul>
-                </div>
+                 <div class="large-6 columns">
+                     <ul class="inline-list right">
+                     </ul>
+                 </div>
 
-            </div>
-        </div>
-    </footer>-->
+             </div>
+         </div>
+     </footer>-->
 
 
 </div>
@@ -161,6 +162,8 @@
 
 <script src="components/angular/angular.js"></script>
 <script src="components/angular-resource/angular-resource.js"></script>
+<script src="components/angular-route/angular-route.min.js"></script>
+<script src="components/angular-animate/angular-animate.min.js"></script>
 <!--<script src="components/angular-cookies/angular-cookies.js"></script>-->
 <!--<script src="components/angular-sanitize/angular-sanitize.js"></script>-->
 

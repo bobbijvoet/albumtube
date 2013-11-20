@@ -73,7 +73,6 @@ var SearchArtistCtrl = app.controller('SearchArtistCtrl', function ($rootScope, 
 	}
 
 
-
 	$scope.playNext = function () {
 		var track = $scope.albums[albumIndex].tracks[trackIndex];
 		console.log(trackIndex);

@@ -1,6 +1,8 @@
 @import "normalize.scss";
 @import "foundation.scss";
 
+@import "compass/css3/transition";
+
 .row.full-width {
   width: 100%;
   max-width: 100%;
@@ -158,10 +160,28 @@ body {
     font-weight: lighter;
     font-size: 11px;
     padding: 3px;
-    //@include button-size(1, false, false);
+    width: 144px;
     @include radius;
 
+    &.ng-enter {
+      opacity: 0;
+      @include transition-property(opacity);
+      @include transition-duration;
+    }
+
+    &.ng-enter-stagger {
+      @include transition-delay(0.1s);
+    }
+
+    &.ng-enter-active {
+      opacity: 1;
+    }
+
+
   }
+
+
+
 
 }
 
@@ -182,5 +202,5 @@ body {
 #player_container.hidden {
   position: fixed;
   bottom: -190px;
-  left: 0px;
+  left: 2px;
 }

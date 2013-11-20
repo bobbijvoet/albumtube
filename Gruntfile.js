@@ -271,5 +271,5 @@ module.exports = function (grunt) {
     'uglify'
   ]);
 
-  grunt.registerTask('default', ['build']);
+  grunt.registerTask('default', ['server']);
 };
