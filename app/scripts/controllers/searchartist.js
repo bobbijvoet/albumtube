@@ -37,8 +37,7 @@ var SearchArtistCtrl = app.controller('SearchArtistCtrl', function ($rootScope, 
 
 		});
 	}
-
-
+/*
 	$scope.addToPlaylist = function (list) {
 		console.log(list);
 //			addToPlaylist
@@ -49,11 +48,20 @@ var SearchArtistCtrl = app.controller('SearchArtistCtrl', function ($rootScope, 
 //				$scope.album = album;
 //				$scope.albums[$scope.albums.indexOf($scope.album)].tracks = data.tracks.track;
 //			});
-	}
 
-	$scope.playSong = function (index) {
+		LastFmService.getAlbumInfo({artist: album.artist.name, album: album.name}, function (data) {
+			console.log(data);
+			PlaylistService.addSongs(data.tracks.track);
+			$scope.playlist = PlaylistService.getList();
+
+		});
+	}
+*/
+
+	$scope.playTrack = function (list) {
 		//Set old currentTrack playing state to false
 		$scope.currentTrack.playing = false;
+
 
 		//Set new currentTrack
 		trackIndex = index;
@@ -63,13 +71,18 @@ var SearchArtistCtrl = app.controller('SearchArtistCtrl', function ($rootScope, 
 			console.log(youtubeId);
 			YoutubeService.player.loadVideoById(youtubeId, 0, 'large');
 		});
-	}
-	$scope.playTrack = function (track) {
-		YoutubeService.getSong(track.artist.name + ' ' + track.name, function (youtubeId) {
-//			$scope.currentTrack.playing = true;
-//			console.log(youtubeId);
-			YoutubeService.player.loadVideoById(youtubeId, 0, 'large');
+
+		LastFmService.getAlbumInfo({artist: album.artist.name, album: album.name}, function (data) {
+			console.log(data);
+			PlaylistService.addSongs(data.tracks.track);
+			$scope.playlist = PlaylistService.getList();
+
 		});
+
+	}
+
+	$scope.playPlaylistTrack = function (index) {
+		PlaylistService.playTrack(index);
 	}
 
 
@@ -81,16 +94,6 @@ var SearchArtistCtrl = app.controller('SearchArtistCtrl', function ($rootScope, 
 //			$rootScope.$emit('nextTrack');
 		$scope.playSong(trackIndex + 1);
 	}
-
-//	$rootScope.$on('playerStateChange', function () {
-//		$scope.$apply(function () {
-//
-//			$scope.playlist = PlaylistService.getList();
-//
-//			console.log($scope.playlist.length);
-//
-//		})
-//	});
 
 	$rootScope.$on('playlistUpdate', function () {
 		$scope.$apply(function () {

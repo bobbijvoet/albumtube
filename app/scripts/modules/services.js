@@ -18,7 +18,6 @@ AlbumTubeServices.factory('YoutubeService', ['$window', '$rootScope', '$http', '
 
 			$http.jsonp(config.url, config).
 				success(function (data, status, headers, config) {
-					console.log(data);
 					return callback(data.feed.entry[0].id.$t.split(':').reverse()[0]);
 				}).
 				error(function (data, status, headers, config) {
@@ -52,10 +51,8 @@ AlbumTubeServices.factory('PlayerService', function ($window, $rootScope, Youtub
 	var PlayerService = {};
 
 	PlayerService.play = function (track) {
-
-		console.log(track);
+		console.log('PlayerService.play');
 		YoutubeService.getSong(track.artist.name + ' ' + track.name, function (youtubeId) {
-			console.log(youtubeId);
 			YoutubeService.player.loadVideoById(youtubeId, 0, 'large');
 		});
 
@@ -66,6 +63,14 @@ AlbumTubeServices.factory('PlayerService', function ($window, $rootScope, Youtub
 //
 //	}
 
+	PlayerService.playNext = function (track) {
+		console.log('PlayerService.play');
+		YoutubeService.getSong(track.artist.name + ' ' + track.name, function (youtubeId) {
+			YoutubeService.player.loadVideoById(youtubeId, 0, 'large');
+		});
+
+	}
+
 
 	return PlayerService;
 });
@@ -74,50 +79,55 @@ AlbumTubeServices.factory('PlayerService', function ($window, $rootScope, Youtub
 AlbumTubeServices.factory('PlaylistService', function ($window, $rootScope, PlayerService, YoutubeService) {
 
 	var PlaylistService = {};
-
+	var trackIndex = 0;
 	PlaylistService.playlist = [];
 
 	PlaylistService.addSongs = function (list) {
 		var wasEmpty = this.playlist.length == 0;
-		if (this.playlist.length == 0) {
-			//Play first immediately
 
-
-
-
-		}
 		this.playlist = this.playlist.concat(list);
 
-		if(wasEmpty){
+		if (wasEmpty) {
 			PlayerService.play(this.playlist[0]);
 		}
 	}
 
+	PlaylistService.addSongsAndPlay = function (list) {
+
+		Array.prototype.splice.apply(this.playlist, [trackIndex,0].concat(list));
+
+		PlayerService.play(this.playlist[trackIndex + 1]);
+	}
+
+
+
 	PlaylistService.currentSong = function () {
-			return this.playlist[0];
-		}
+		return this.playlist[0];
+	}
+
+	PlaylistService.playTrack = function (index) {
+		console.log('PlaylistService.playTrack');
+		var track = PlaylistService.playlist[index];
+
+		PlaylistService.playlist.map(function (track) {
+			track.playing = false;
+		});
+
+		track.playing = true;
+		PlayerService.play(track);
+	}
 
 	PlaylistService.getList = function () {
 		return this.playlist;
 	}
 
-
 	$rootScope.$on('playerStateChange', function () {
-
-//		this.playlist.unshift();
 		if (YoutubeService.playerState() == 0) {
-			console.log();
 
-			PlaylistService.playlist.shift();
+			trackIndex++;
 
-			console.log(PlaylistService.playlist.length);
-			console.log(PlaylistService.playlist);
-
-			PlayerService.play(PlaylistService.playlist[0]);
-
-
+			PlaylistService.playTrack(trackIndex);
 		}
-
 	});
 
 	return PlaylistService;

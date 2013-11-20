@@ -98,7 +98,7 @@
                         <!--<div class="open-btn button tiny radius" ng-click="loadAlbumTracks($index);" ng-hide="album.tracks">Open album</div>-->
                         <ul class="tracklist">
                             <div ng-repeat="track in album.tracks">
-                                <li ng-class="{'active': track.playing}" ng-click="addToPlaylist([track]);">
+                                <li ng-class="{'active': track.playing}" ng-click="playTrack([track]);">
                                     <div class="playnow hide">▸</div>
                                     {{track.name}}
                                 </li>
@@ -116,12 +116,15 @@
     <div class="row full-width">
         <div id="playlist" class="large-12">
             <div id="PL-songs">
-                <a class="PL-song" ng-repeat="track in playlist" ng-click="playTrack(track);">
+                <a class="PL-song" ng-repeat="track in playlist" ng-class="{'active': track.playing}" ng-click="playPlaylistTrack($index);">
                     <!--<li ng-class="{'active': track.playing}" ng-click="addToPlaylist([track]);">
                         <div class="playnow hide">▸</div>
                         {{track.name}}
                     </li>
                     -->
+
+
+
                     {{track.artist.name}}<br>
                     {{track.name}}
 
@@ -164,6 +167,7 @@
 <script src="components/angular-resource/angular-resource.js"></script>
 <script src="components/angular-route/angular-route.min.js"></script>
 <script src="components/angular-animate/angular-animate.min.js"></script>
+<script src="components/lodash/dist/lodash.min.js"></script>
 <!--<script src="components/angular-cookies/angular-cookies.js"></script>-->
 <!--<script src="components/angular-sanitize/angular-sanitize.js"></script>-->
 

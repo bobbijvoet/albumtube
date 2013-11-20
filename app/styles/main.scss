@@ -177,6 +177,9 @@ body {
       opacity: 1;
     }
 
+    &.active {
+      background: $primary-color;
+    }
 
   }
 
