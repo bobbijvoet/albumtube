@@ -4,11 +4,11 @@ var SearchArtistCtrl = app.controller('SearchArtistCtrl', function ($rootScope, 
 	$scope.youtubeSrc = "http://youtube.com/";
 	$scope.videoScreenIsHidden = true;
 	$scope.state = YoutubeService.playerState();
-	$scope.artist = 'nicolay';
+	$scope.artist = 'arpanet';
 	$scope.currentTrack = {};
 
 
-	$scope.playlist = PlaylistService.playlist;
+	$scope.playlist = PlaylistService.getList();
 
 
 	$scope.findAlbumsForArtist = function () {
@@ -31,8 +31,10 @@ var SearchArtistCtrl = app.controller('SearchArtistCtrl', function ($rootScope, 
 		var album = $scope.albums[index];
 //
 		LastFmService.getAlbumInfo({artist: album.artist.name, album: album.name}, function (data) {
-			console.log(data);
-			PlaylistService.addSongs(data.tracks.track);
+			$scope.album = album;
+						$scope.albums[$scope.albums.indexOf($scope.album)].tracks = data.tracks.track;
+			$scope.playlist = PlaylistService.addSongs(data.tracks.track);
+
 			$scope.playlist = PlaylistService.getList();
 
 		});
@@ -58,26 +60,42 @@ var SearchArtistCtrl = app.controller('SearchArtistCtrl', function ($rootScope, 
 	}
 */
 
-	$scope.playTrack = function (list) {
+	$scope.addTracks = function (list) {
+		console.log('add');
+		$scope.playlist = PlaylistService.addSongs(angular.copy(list));
+	}
+
+	$scope.playTracks = function (list) {
+		console.log('add&play');
+
 		//Set old currentTrack playing state to false
-		$scope.currentTrack.playing = false;
+//		$scope.currentTrack.playing = false;
 
 
 		//Set new currentTrack
-		trackIndex = index;
-		$scope.currentTrack = $scope.albums[albumIndex].tracks[index];
-		YoutubeService.getSong($scope.currentTrack.artist.name + ' ' + $scope.currentTrack.name, function (youtubeId) {
-			$scope.currentTrack.playing = true;
-			console.log(youtubeId);
-			YoutubeService.player.loadVideoById(youtubeId, 0, 'large');
-		});
+//		trackIndex = index;
 
-		LastFmService.getAlbumInfo({artist: album.artist.name, album: album.name}, function (data) {
-			console.log(data);
-			PlaylistService.addSongs(data.tracks.track);
-			$scope.playlist = PlaylistService.getList();
 
-		});
+//		PlaylistService.playTrack(index);
+
+
+
+		$scope.playlist = PlaylistService.addSongsAndPlay(angular.copy(list));
+
+
+//		$scope.currentTrack = $scope.albums[albumIndex].tracks[index];
+//		YoutubeService.getSong($scope.currentTrack.artist.name + ' ' + $scope.currentTrack.name, function (youtubeId) {
+//			$scope.currentTrack.playing = true;
+//			console.log(youtubeId);
+//			YoutubeService.player.loadVideoById(youtubeId, 0, 'large');
+//		});
+//
+//		LastFmService.getAlbumInfo({artist: album.artist.name, album: album.name}, function (data) {
+//			console.log(data);
+//			PlaylistService.addSongs(data.tracks.track);
+//			$scope.playlist = PlaylistService.getList();
+//
+//		});
 
 	}
 
@@ -87,12 +105,9 @@ var SearchArtistCtrl = app.controller('SearchArtistCtrl', function ($rootScope, 
 
 
 	$scope.playNext = function () {
-		var track = $scope.albums[albumIndex].tracks[trackIndex];
-		console.log(trackIndex);
-		track.playing = false;
-		//TODO:  Play next in queue
-//			$rootScope.$emit('nextTrack');
-		$scope.playSong(trackIndex + 1);
+
+		PlaylistService.playNext();
+
 	}
 
 	$rootScope.$on('playlistUpdate', function () {
@@ -103,6 +118,14 @@ var SearchArtistCtrl = app.controller('SearchArtistCtrl', function ($rootScope, 
 			}
 		})
 	});
+
+	$rootScope.$on('playerStateChange', function () {
+		$scope.$apply(function () {
+
+			$scope.state = YoutubeService.playerState();
+		})
+	});
+
 
 
 	$scope.togglePause = function () {

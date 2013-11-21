@@ -74,7 +74,7 @@ body {
   width: 100%;;
 }
 
-.album-cover .cover-container:hover .play-btn {
+.album-cover .cover-container:hover .open-btn {
   display: block;
   //height: 50px;
   left: 74px;
@@ -83,9 +83,7 @@ body {
   //width: 50px;
 }
 
-.play-btn {
-  display: none;
-}
+
 
 .album-cover .tracklist {
   list-style: none;
@@ -97,17 +95,24 @@ body {
   color: #FFF;
   padding: 0;
   width: 100%;
+
+
+
   li {
     cursor: pointer;
     text-overflow: clip;
     white-space: nowrap;
     left: 0px;
+
     position: relative;
     padding: 0 5px;
 
   }
   li:hover {
-    .playnow {
+    .track-play {
+      display: inline;
+    }
+    .track-add {
       display: inline;
     }
     background: white;
@@ -119,9 +124,28 @@ body {
   }
 }
 
+
+.AT-actions {
+  float:right;
+  font-size: 28px;
+  line-height: 18px;
+  position: absolute;
+  right: 4px;
+  top: 0px;
+}
+
 .album-cover .panel {
   height: 4.5em;
   padding: 1.0em;
+  position: relative;
+
+  .play-btn {
+    
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+  }
+  
 }
 
 .album-cover .panel h5 {

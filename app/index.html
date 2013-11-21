@@ -17,12 +17,6 @@
     <link rel="stylesheet" href="styles/main.css">
 </head>
 <body ng-app="AlbumTube">
-<!--[if lt IE 7]>
-<p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser
-    today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better
-    experience this site.</p>
-<![endif]-->
-
 <!--[if lt IE 9]>
 <script src="components/es5-shim/es5-shim.js"></script>
 <script src="components/json3/lib/json3.min.js"></script>
@@ -90,24 +84,29 @@
                 <div class="large-4 small-6 columns album-cover" ng-repeat="album in albums"
                      ng-class="{'end': $last}">
                     <div class="cover-container">
-                        <img ng-src="{{album.image[3]['#text']}}">
+                        <img ng-src="{{album.image[3]['#text']}}" ng-click="loadAlbumTracks($index);">
 
-                        <div class="play-btn button tiny radius" ng-click="playAlbumTracks($index);"
-                             ng-hide="album.tracks">Play album
-                        </div>
-                        <!--<div class="open-btn button tiny radius" ng-click="loadAlbumTracks($index);" ng-hide="album.tracks">Open album</div>-->
                         <ul class="tracklist">
                             <div ng-repeat="track in album.tracks">
-                                <li ng-class="{'active': track.playing}" ng-click="playTrack([track]);">
-                                    <div class="playnow hide">▸</div>
+                                <li>
                                     {{track.name}}
+                                    {{track.uniqueId}}
+                                    <div class="AT-actions">
+                                        <div class="track-add hide" ng-click="addTracks([track]);">+</div>
+                                        <div class="track-play hide" ng-click="playTracks([track]);">▸</div>
+                                    </div>
                                 </li>
                             </div>
                         </ul>
                     </div>
+
                     <div class="panel">
                         <h5>{{album.artist.name}}</h5>
                         <h5 class="subheader">{{album.name}}</h5>
+
+                        <div class="play-btn button tiny radius" ng-click="playAlbumTracks($index);"
+                             ng-show="album.tracks">▸
+                        </div>
                     </div>
                 </div>
             </div>
@@ -116,18 +115,10 @@
     <div class="row full-width">
         <div id="playlist" class="large-12">
             <div id="PL-songs">
-                <a class="PL-song" ng-repeat="track in playlist" ng-class="{'active': track.playing}" ng-click="playPlaylistTrack($index);">
-                    <!--<li ng-class="{'active': track.playing}" ng-click="addToPlaylist([track]);">
-                        <div class="playnow hide">▸</div>
-                        {{track.name}}
-                    </li>
-                    -->
-
-
-
+                <a class="PL-song" ng-repeat="track in playlist" ng-class="{'active': track.playing}"
+                   ng-click="playPlaylistTrack($index);">
                     {{track.artist.name}}<br>
                     {{track.name}}
-
                 </a>
 
             </div>

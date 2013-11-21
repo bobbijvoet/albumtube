@@ -82,6 +82,14 @@ AlbumTubeServices.factory('PlaylistService', function ($window, $rootScope, Play
 	var trackIndex = 0;
 	PlaylistService.playlist = [];
 
+
+	PlaylistService.addSong = function (track) {
+			this.playlist.push(angular.copy(track));
+
+			return this.playlist;
+		}
+
+
 	PlaylistService.addSongs = function (list) {
 		var wasEmpty = this.playlist.length == 0;
 
@@ -90,15 +98,21 @@ AlbumTubeServices.factory('PlaylistService', function ($window, $rootScope, Play
 		if (wasEmpty) {
 			PlayerService.play(this.playlist[0]);
 		}
+
+		return this.playlist;
 	}
 
 	PlaylistService.addSongsAndPlay = function (list) {
+		Array.prototype.splice.apply(this.playlist, [trackIndex + 1, 0].concat(list));
 
-		Array.prototype.splice.apply(this.playlist, [trackIndex,0].concat(list));
+		if (this.playlist.length == 1) {
+			PlaylistService.playTrack(0);
+		} else {
+			PlaylistService.playTrack(trackIndex + 1);
+		}
 
-		PlayerService.play(this.playlist[trackIndex + 1]);
+		return this.playlist;
 	}
-
 
 
 	PlaylistService.currentSong = function () {
@@ -114,8 +128,16 @@ AlbumTubeServices.factory('PlaylistService', function ($window, $rootScope, Play
 		});
 
 		track.playing = true;
+
+		trackIndex = index;
 		PlayerService.play(track);
 	}
+
+	PlaylistService.playNext = function () {
+		trackIndex++;
+		PlaylistService.playTrack(trackIndex);
+	}
+
 
 	PlaylistService.getList = function () {
 		return this.playlist;
@@ -124,9 +146,7 @@ AlbumTubeServices.factory('PlaylistService', function ($window, $rootScope, Play
 	$rootScope.$on('playerStateChange', function () {
 		if (YoutubeService.playerState() == 0) {
 
-			trackIndex++;
-
-			PlaylistService.playTrack(trackIndex);
+			PlaylistService.PlaylistService.playNext();
 		}
 	});
 
@@ -156,19 +176,25 @@ AlbumTubeServices.factory('LastFmService', ['$rootScope', '$http', '$q', functio
 
 			$http(config).
 				success(function (data, status, headers, config) {
+
 					return callback(data.topalbums.album)
 				}).
 				error(function (data, status, headers, config) {
 				});
 		}, getAlbumInfo: function (data, callback) {
 			var config = angular.copy(lastFmConfig, {});
-			console.log(data);
 			config.params.artist = data.artist;
 			config.params.album = data.album;
 			config.params.method = 'album.getinfo';
 
 			$http(config).
 				success(function (data, status, headers, config) {
+
+
+//					data.album.tracks.track.map(function (track) {
+//						track.uniqueId = _.uniqueId('track_')
+//					});
+
 					return callback(data.album)
 				}).
 				error(function (data, status, headers, config) {
