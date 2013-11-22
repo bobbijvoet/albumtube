@@ -58,7 +58,7 @@ AlbumTubeServices.factory('PlayerService', function ($window, $rootScope, Youtub
 
 	}
 //	if (YoutubeService.playerState() == 1) {
-//		PlaylistService.playlist.shift();
+//		PlaylistService.list.shift();
 //
 //
 //	}
@@ -80,50 +80,44 @@ AlbumTubeServices.factory('PlaylistService', function ($window, $rootScope, Play
 
 	var PlaylistService = {};
 	var trackIndex = 0;
-	PlaylistService.playlist = [];
+	PlaylistService.list = [];
 
 
 	PlaylistService.addSong = function (track) {
-			this.playlist.push(angular.copy(track));
-
-			return this.playlist;
-		}
-
+		this.list.push(angular.copy(track));
+	}
 
 	PlaylistService.addSongs = function (list) {
-		var wasEmpty = this.playlist.length == 0;
+		console.log('PlaylistService.addSongs');
 
-		this.playlist = this.playlist.concat(list);
+		var wasEmpty = this.list.length == 0;
+
+		Array.prototype.splice.apply(this.list, [ this.list.length, 0].concat(list));
 
 		if (wasEmpty) {
-			PlayerService.play(this.playlist[0]);
+			PlaylistService.playTrack(0);
 		}
-
-		return this.playlist;
 	}
 
 	PlaylistService.addSongsAndPlay = function (list) {
-		Array.prototype.splice.apply(this.playlist, [trackIndex + 1, 0].concat(list));
+		Array.prototype.splice.apply(this.list, [trackIndex + 1, 0].concat(list));
 
-		if (this.playlist.length == 1) {
+		if (this.list.length == 1) {
 			PlaylistService.playTrack(0);
 		} else {
 			PlaylistService.playTrack(trackIndex + 1);
 		}
-
-		return this.playlist;
 	}
 
-
 	PlaylistService.currentSong = function () {
-		return this.playlist[0];
+		return this.list[trackIndex];
 	}
 
 	PlaylistService.playTrack = function (index) {
 		console.log('PlaylistService.playTrack');
-		var track = PlaylistService.playlist[index];
+		var track = PlaylistService.list[index];
 
-		PlaylistService.playlist.map(function (track) {
+		PlaylistService.list.map(function (track) {
 			track.playing = false;
 		});
 
@@ -136,11 +130,6 @@ AlbumTubeServices.factory('PlaylistService', function ($window, $rootScope, Play
 	PlaylistService.playNext = function () {
 		trackIndex++;
 		PlaylistService.playTrack(trackIndex);
-	}
-
-
-	PlaylistService.getList = function () {
-		return this.playlist;
 	}
 
 	$rootScope.$on('playerStateChange', function () {
@@ -172,7 +161,6 @@ AlbumTubeServices.factory('LastFmService', ['$rootScope', '$http', '$q', functio
 			config.params.method = 'artist.gettopalbums';
 			config.params.limit = 10;
 			config.params.autocorrect = 1;
-
 
 			$http(config).
 				success(function (data, status, headers, config) {

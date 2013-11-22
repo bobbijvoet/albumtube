@@ -1,7 +1,9 @@
-@import "normalize.scss";
-@import "foundation.scss";
+@import "../components/foundation/scss/normalize";
+@import "foundation_variables";
+@import "../components/foundation/scss/foundation";
 
 @import "compass/css3/transition";
+
 
 .row.full-width {
   width: 100%;

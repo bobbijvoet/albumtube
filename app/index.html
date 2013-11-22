@@ -115,7 +115,7 @@
     <div class="row full-width">
         <div id="playlist" class="large-12">
             <div id="PL-songs">
-                <a class="PL-song" ng-repeat="track in playlist" ng-class="{'active': track.playing}"
+                <a class="PL-song" ng-repeat="track in playlist.list" ng-class="{'active': track.playing}"
                    ng-click="playPlaylistTrack($index);">
                     {{track.artist.name}}<br>
                     {{track.name}}
