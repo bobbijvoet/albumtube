@@ -15,11 +15,11 @@ var SearchArtistCtrl = app.controller('SearchArtistCtrl', function ($rootScope, 
 
 
 
-	$scope.$watch( function () { return PlaylistService.list; }, function (data) {
+	/*$scope.$watch( function () { return PlaylistService.list; }, function (data) {
 //	    $scope.playlist = data;
 		console.log(PlaylistService.list.length);
 
-	  }, true);
+	  }, true);*/
 
 
 	$scope.findAlbumsForArtist = function () {

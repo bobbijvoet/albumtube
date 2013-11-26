@@ -17,10 +17,10 @@ describe('Controller: SearchArtistCtrl', function () {
 	}));
 
 	it('set initial artist value to nicolay', function () {
-		expect(scope.artist).toBe('nicolay');
+		expect(scope.artist).toBe('arpanet');
 	});
 
 	it('set initial artist value to nicolay', function () {
-		expect(scope.artist).toBe('nicolay');
+		expect(scope.artist).toBe('arpanet');
 	});
 });
