@@ -4,7 +4,7 @@ var SearchArtistCtrl = app.controller('SearchArtistCtrl', function ($rootScope, 
 	$scope.youtubeSrc = "http://youtube.com/";
 	$scope.videoScreenIsHidden = true;
 	$scope.state = YoutubeService.playerState();
-	$scope.artist = 'arpanet';
+	$scope.artist = 'dave brubeck';
 	$scope.currentTrack = {};
 
 
@@ -35,7 +35,7 @@ var SearchArtistCtrl = app.controller('SearchArtistCtrl', function ($rootScope, 
 			$scope.album = album;
 			$scope.albums[$scope.albums.indexOf($scope.album)].tracks = data.tracks.track;
 		});
-	}
+	};
 
 
 	$scope.playAlbumTracks = function (index) {
@@ -47,27 +47,25 @@ var SearchArtistCtrl = app.controller('SearchArtistCtrl', function ($rootScope, 
 
 			PlaylistService.addSongs(data.tracks.track);
 		});
-	}
+	};
 
 
 	$scope.addTracks = function (list) {
 		PlaylistService.addSong(angular.copy(list[0]));
-	}
+	};
 
 	$scope.playTracks = function (list) {
 		PlaylistService.addSongsAndPlay(angular.copy(list));
 
-
-
-	}
+	};
 
 	$scope.playPlaylistTrack = function (index) {
 		PlaylistService.playTrack(index);
-	}
+	};
 
 	$scope.playNext = function () {
 		PlaylistService.playNext();
-	}
+	};
 
 	$rootScope.$on('playlistUpdate', function () {
 		$scope.$apply(function () {
@@ -91,10 +89,10 @@ var SearchArtistCtrl = app.controller('SearchArtistCtrl', function ($rootScope, 
 		} else {
 			YoutubeService.player.playVideo();
 		}
-	}
+	};
 
 	$scope.toggleVideoScreen = function () {
-		console.log(YoutubeService.getVideoTotalDuration())
+		console.log(YoutubeService.getVideoTotalDuration());
 		$scope.videoScreenIsHidden = !$scope.videoScreenIsHidden;
-	}
+	};
 });
