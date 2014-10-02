@@ -4,18 +4,18 @@ app.directive('ticker', function ($timeout) {
   return {
     restrict: 'A',
     link: function (scope, element, attrs, controller) {
-      var originalText = '', elText = '', tickDelay = 0, tickInterval, tickerEnabled = false;
+      var originalText = '', elText = '', tickDelay = 0, tickInterval, mustTick = false;
 
       $timeout(function () {
         if ($(element).innerWidth() < element[0].scrollWidth) {
           elText = originalText = element.text().trim();
-          tickerEnabled = true;
+          mustTick = true;
         }
       }, 0);
 
       attrs.$observe('ticker', function (val) {
         //Why is val no primitive?!
-        if (val === 'true' && tickerEnabled) {
+        if (val === 'true' && mustTick) {
           tickInterval = setInterval(function () {
             if (elText.length) {
               if (tickDelay === 0) {
@@ -33,7 +33,7 @@ app.directive('ticker', function ($timeout) {
           }, 100);
         }
 
-        if (val === 'false' && tickerEnabled) {
+        if (val === 'false' && mustTick) {
           clearInterval(tickInterval);
           elText = originalText;
           element.text(elText);
