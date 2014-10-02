@@ -2,7 +2,7 @@
 @import "foundation_variables";
 @import "../components/foundation/scss/foundation";
 
-@import "compass/css3/transition";
+//@import "compass/css3/transition";
 
 
 .row.full-width {
@@ -191,12 +191,12 @@ body {
 
     &.ng-enter {
       opacity: 0;
-      @include transition-property(opacity);
-      @include transition-duration;
+//      @include transition-property(opacity);
+//      @include transition-duration;
     }
 
     &.ng-enter-stagger {
-      @include transition-delay(0.1s);
+//      @include transition-delay(0.1s);
     }
 
     &.ng-enter-active {
