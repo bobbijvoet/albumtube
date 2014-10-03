@@ -29,6 +29,7 @@ var SearchArtistCtrl = app.controller('SearchArtistCtrl', function ($rootScope, 
 	}
 
 	$scope.loadAlbumTracks = function (index) {
+    console.log('tracks loading')
 		albumIndex = index;
 		var album = $scope.albums[albumIndex];
 		LastFmService.getAlbumInfo({artist: album.artist.name, album: album.name}, function (data) {

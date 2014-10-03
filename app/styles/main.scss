@@ -4,7 +4,6 @@
 
 //@import "compass/css3/transition";
 
-
 .row.full-width {
   width: 100%;
   max-width: 100%;
@@ -33,7 +32,7 @@ body {
 
 .top-bar {
   margin-bottom: 1.25em;
-  background: -moz-linear-gradient(center top, #333333, #222222)
+  background: -moz-linear-gradient(center top, #333, #222)
 }
 
 #player {
@@ -60,15 +59,35 @@ body {
   //@button
 }
 
+#album-covers {
+  margin-bottom: 50px;
+}
+
 .album-cover {
   $behavior: nest-collapse;
+
+
+  &:hover {
+    .panel {
+      background:$primary-color;
+      border-color:lighten($primary-color, 5);
+      h5 {
+        color:#fff;
+      }
+    }
+  }
+
 }
 
 .album-cover .cover-container {
+  height: 192px;
+  width: 192px;
+  display: block;
   cursor: pointer;
   position: relative;
-  height: inherit;
-  overflow: hidden;;
+  overflow-y: auto  ;
+  overflow-x: hidden;
+  background-size: 192px 192px;
 }
 
 .album-cover .cover-container > img {
@@ -85,8 +104,6 @@ body {
   //width: 50px;
 }
 
-
-
 .album-cover .tracklist {
   list-style: none;
   display: block;
@@ -97,8 +114,6 @@ body {
   color: #FFF;
   padding: 0;
   width: 100%;
-
-
 
   li {
     cursor: pointer;
@@ -113,9 +128,15 @@ body {
   li:hover {
     .track-play {
       display: inline;
+      &:hover {
+        color: $primary-color;
+      }
     }
     .track-add {
       display: inline;
+      &:hover {
+        color: $primary-color;
+      }
     }
     background: white;
     color: black;
@@ -126,9 +147,8 @@ body {
   }
 }
 
-
 .AT-actions {
-  float:right;
+  float: right;
   font-size: 28px;
   line-height: 18px;
   position: absolute;
@@ -140,14 +160,15 @@ body {
   height: 4.5em;
   padding: 1.0em;
   position: relative;
+  transition:background-color 0.2s;
 
   .play-btn {
-    
+
     position: absolute;
     right: 10px;
-    bottom: 10px;
+    top: 10px;
   }
-  
+
 }
 
 .album-cover .panel h5 {
@@ -155,6 +176,10 @@ body {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  transition:color 0.2s;
+  line-height: 14px;
+  margin-bottom: 14px;
+
 }
 
 .album-cover .panel h6 {
@@ -169,7 +194,7 @@ body {
   position: fixed;
   height: 50px;
   padding: 0px;
-  background: -moz-linear-gradient(center bottom, #333333, #222222);
+  background: -moz-linear-gradient(center bottom, #333, #222);
   //border-top:1px $button-border-color solid;
   bottom: 0px;
   z-index: 99;
@@ -183,21 +208,25 @@ body {
     //height: 20px;
     @include button-base;
     //@include button-size(0.8, false, false);
-    color: #fff;
+    color: #FFF;
     font-weight: lighter;
     font-size: 11px;
     padding: 3px;
     width: 144px;
+    max-height: 32px;
+    line-height: 12px;
+    overflow: hidden;
+    margin-right: 5px;
     @include radius;
 
     &.ng-enter {
       opacity: 0;
-//      @include transition-property(opacity);
-//      @include transition-duration;
+      //      @include transition-property(opacity);
+      //      @include transition-duration;
     }
 
     &.ng-enter-stagger {
-//      @include transition-delay(0.1s);
+      //      @include transition-delay(0.1s);
     }
 
     &.ng-enter-active {
@@ -208,17 +237,22 @@ body {
       background: $primary-color;
     }
 
+
+
   }
-
-
-
+  h5 {
+        color:#fff;
+    display: inline-block;
+    float: left;
+    margin-right: 10px;
+      }
 
 }
 
 #player_container {
   height: 240px;
   position: fixed;
-  border-color: #FF3333;
+  border-color: #F33;
   border-style: solid;
   border-width: 1px;
   border-left: 0;

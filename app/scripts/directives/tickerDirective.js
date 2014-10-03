@@ -1,6 +1,6 @@
 'use strict';
 
-app.directive('ticker', function ($timeout) {
+app.directive('ticker', function ($timeout, $parse) {
   return {
     restrict: 'A',
     link: function (scope, element, attrs, controller) {
@@ -14,12 +14,12 @@ app.directive('ticker', function ($timeout) {
       }, 0);
 
       attrs.$observe('ticker', function (val) {
-        //Why is val no primitive?!
-        if (val === 'true' && mustTick) {
+        if ($parse(val)(scope) === true && mustTick) {
+          tickDelay = 2;
           tickInterval = setInterval(function () {
             if (elText.length) {
               if (tickDelay === 0) {
-                elText = elText.substring(elText.charAt(0) === ' ' ? 2 : 1);
+                elText = elText.substring(elText[0] === ' ' ? 2 : 1);
               } else {
                 tickDelay--;
               }
@@ -30,15 +30,13 @@ app.directive('ticker', function ($timeout) {
               $(element).fadeIn();
             }
             element.text(elText);
-          }, 100);
+          }, 120);
         }
 
-        if (val === 'false' && mustTick) {
+        if ($parse(val)(scope) === false && mustTick) {
           clearInterval(tickInterval);
           elText = originalText;
           element.text(elText);
-          $(element).css({display: 'none'});
-          $(element).fadeIn();
           tickDelay = 0;
         }
       });

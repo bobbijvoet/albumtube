@@ -74,18 +74,11 @@
 
 		</div>
 
-		<div id="album-covers-head" class="large-8 column" ng-show="albums">
-			<div class="panel">
-				Results for {{artist}}
-			</div>
-		</div>
 		<div id="album-covers" class="large-8 columns">
 			<div class="row">
 				<div class="large-4 small-6 columns album-cover" ng-repeat="album in albums"
 						 ng-class="{'end': $last}"  ng-mouseenter="startTicker = true;" ng-mouseleave="startTicker = false;">
-					<div class="cover-container">
-						<img ng-src="{{album.image[3]['#text']}}" ng-click="loadAlbumTracks($index);">
-
+					<div class="cover-container" ng-style="{'background-image':'url(' + album.image[3]['#text'] + ')'}" ng-click="loadAlbumTracks($index);">
 						<ul class="tracklist">
 							<div ng-repeat="track in album.tracks">
 								<li>
@@ -117,6 +110,7 @@
 	<div class="row full-width">
 		<div id="playlist" class="large-12">
 			<div id="PL-songs">
+				<h5>Playlist:</h5>
 				<a class="PL-song" ng-repeat="track in playlist.list" ng-class="{'active': track.playing}"
 					 ng-click="playPlaylistTrack($index);">
 					{{track.artist.name}}<br>
