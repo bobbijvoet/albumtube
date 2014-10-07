@@ -6,8 +6,8 @@ describe('the albumtube main page', function() {
     element(by.model('artist')).sendKeys('arpanet');
     element(by.css('[ng-click="findAlbumsForArtist()"]')).click();
 
-    var todoList = element.all(by.repeater('album in albums'));
+    var albumList = element.all(by.repeater('album in albums'));
     //Arpanet has currently 5 known albums by lastfm
-    expect(todoList.count()).toEqual(5);
+    expect(albumList.count()).toEqual(5);
   });
 });
