@@ -1,0 +1,13 @@
+<div class="row full-width">
+	<div id="playlist" class="large-12">
+		<div id="PL-songs">
+			<h5>Playlist: <span ng-if="playlist.list.length === 0">is still empty...</span></h5>
+			<a class="PL-song" ng-repeat="track in playlist.list" ng-class="{'active': track.playing}"
+				 ng-click="playPlaylistTrack($index);">
+				{{track.artist.name}}<br>
+				{{track.name}}
+			</a>
+
+		</div>
+	</div>
+</div>

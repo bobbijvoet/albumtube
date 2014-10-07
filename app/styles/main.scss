@@ -81,13 +81,14 @@ body {
 
 .album-cover .cover-container {
   height: 192px;
-  width: 192px;
+  width: auto;
   display: block;
   cursor: pointer;
   position: relative;
   overflow-y: auto  ;
   overflow-x: hidden;
-  background-size: 192px 192px;
+  background-size: cover;
+  background-position: 50% 50%;
 }
 
 .album-cover .cover-container > img {
@@ -194,8 +195,10 @@ body {
   position: fixed;
   height: 50px;
   padding: 0px;
-  background: -moz-linear-gradient(center bottom, #333, #222);
+//  background: -moz-linear-gradient(center bottom, #333, #222);
   //border-top:1px $button-border-color solid;
+  background: -moz-linear-gradient(center top, #333, #222);
+
   bottom: 0px;
   z-index: 99;
 

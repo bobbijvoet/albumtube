@@ -23,24 +23,7 @@
 <![endif]-->
 
 <div ng-controller="SearchArtistCtrl">
-	<div class="row full-width">
-		<div class="large-12">
-			<nav class="top-bar">
-				<ul class="title-area">
-					<li class="name">
-						<h1>
-							<a href="#">
-								Albumtube
-							</a>
-						</h1>
-					</li>
-					<li class="tagline">
-						<i class="left">Listen to your favorite albums</i>
-					</li>
-				</ul>
-			</nav>
-		</div>
-	</div>
+	<ng-include src="'partials/header.html'"></ng-include>
 
 	<div class="row menu">
 		<div class="large-4 columns">
@@ -63,22 +46,14 @@
 					</div>
 				</div>
 			</div>
-			<!--<div class="panel playlist" ng-controller="PlaylistCtrl">
-					<ul>
-							<li></li>
-							<li></li>
-							<li></li>
-					</ul>
-			</div>-->
-			Playerstate: {{state}}
-
 		</div>
 
 		<div id="album-covers" class="large-8 columns">
 			<div class="row">
 				<div class="large-4 small-6 columns album-cover" ng-repeat="album in albums"
-						 ng-class="{'end': $last}"  ng-mouseenter="startTicker = true;" ng-mouseleave="startTicker = false;">
-					<div class="cover-container" ng-style="{'background-image':'url(' + album.image[3]['#text'] + ')'}" ng-click="loadAlbumTracks($index);">
+						 ng-class="{'end': $last}" ng-mouseenter="startTicker = true;" ng-mouseleave="startTicker = false;">
+					<div class="cover-container" ng-style="{'background-image':'url(' + album.image[3]['#text'] + ')'}"
+							 ng-click="loadAlbumTracks($index);">
 						<ul class="tracklist">
 							<div ng-repeat="track in album.tracks">
 								<li>
@@ -107,19 +82,8 @@
 			</div>
 		</div>
 	</div>
-	<div class="row full-width">
-		<div id="playlist" class="large-12">
-			<div id="PL-songs">
-				<h5>Playlist: <span ng-if="playlist.list.length === 0">is still empty...</span></h5>
-				<a class="PL-song" ng-repeat="track in playlist.list" ng-class="{'active': track.playing}"
-					 ng-click="playPlaylistTrack($index);">
-					{{track.artist.name}}<br>
-					{{track.name}}
-				</a>
 
-			</div>
-		</div>
-	</div>
+	<ng-include src="'partials/footer.html'"></ng-include>
 
 	<div id="player_container" ng-class="{'hidden': videoScreenIsHidden}">
 		<div id="player"></div>
@@ -128,27 +92,7 @@
 			<div ng-hide="videoScreenIsHidden">Hide Video</div>
 		</div>
 	</div>
-
-	<!-- <footer class="row">
-			 <div class="large-12 columns">
-					 <hr/>
-					 <div class="row">
-							 <div class="large-12 columns">
-									 <p>Made by Bob Bijvoet.</p>
-							 </div>
-
-							 <div class="large-6 columns">
-									 <ul class="inline-list right">
-									 </ul>
-							 </div>
-
-					 </div>
-			 </div>
-	 </footer>-->
-
-
 </div>
-
 
 <script src="components/angular/angular.js"></script>
 <script src="components/angular-resource/angular-resource.js"></script>
